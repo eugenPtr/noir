@@ -22,3 +22,12 @@ pub enum Directive {
         sort_by: Vec<u32>, // specify primary index to sort by, then the secondary,... For instance, if tuple is 2 and sort_by is [1,0], then a=[(a0,b0),..] is sorted by bi and then ai.
     },
 }
+
+impl Directive {
+    pub fn get_outputs_vec(&self) -> Vec<Witness> {
+        match self {
+            Directive::ToLeRadix { b, .. } => b.to_owned(),
+            Directive::PermutationSort { bits, .. } => bits.to_owned(),
+        }
+    }
+}
