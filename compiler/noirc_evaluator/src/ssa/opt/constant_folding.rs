@@ -124,12 +124,6 @@ impl Context {
 
         Self::replace_result_ids(dfg, &old_results, &new_results);
 
-        // If we just inserted an `Instruction::EnableSideEffects`, we need to update `side_effects_enabled_var`
-        // so that we use the correct set of constrained values in future.
-        if let Instruction::EnableSideEffects { condition } = instruction {
-            *side_effects_enabled_var = condition;
-        };
-
         Self::cache_instruction(
             instruction,
             new_results,
@@ -137,6 +131,12 @@ impl Context {
             instruction_result_cache,
             constrained_values.entry(*side_effects_enabled_var).or_default(),
         );
+        
+         // If we just inserted an `Instruction::EnableSideEffects`, we need to update `side_effects_enabled_var`
+        // so that we use the correct set of constrained values in future.
+        if let Instruction::EnableSideEffects { condition } = instruction {
+            *side_effects_enabled_var = condition;
+        };
     }
 
     /// Fetches an [`Instruction`] by its [`InstructionId`] and fully resolves its inputs.
