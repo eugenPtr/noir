@@ -45,7 +45,7 @@ pub(crate) fn optimize_into_acir(
 
     let ssa_gen_span = span!(Level::TRACE, "ssa_generation");
     let ssa_gen_span_guard = ssa_gen_span.enter();
-    let ssa = SsaBuilder::new(program, print_ssa_passes)?
+    let mut ssa_builder = SsaBuilder::new(program, print_ssa_passes)?
         .run_pass(Ssa::defunctionalize, "After Defunctionalization:")
         .run_pass(Ssa::inline_functions, "After Inlining:")
         // Run mem2reg with the CFG separated into blocks
@@ -60,14 +60,30 @@ pub(crate) fn optimize_into_acir(
         .run_pass(Ssa::mem2reg, "After Mem2Reg:")
         .run_pass(Ssa::flatten_cfg, "After Flattening:")
         // Run mem2reg once more with the flattened CFG to catch any remaining loads/stores
-        .run_pass(Ssa::mem2reg, "After Mem2Reg:")
-        .run_pass(Ssa::bubble_up_constrains, "After Constraint Bubbling:")
-        .run_pass(Ssa::fold_constants, "After Constant Folding:")
-        .run_pass(Ssa::dead_instruction_elimination, "After Dead Instruction Elimination:")
-        .run_pass(Ssa::bubble_up_constrains, "After Constraint Bubbling:")
-        .run_pass(Ssa::fold_constants, "After Constant Folding:")
-        .run_pass(Ssa::dead_instruction_elimination, "After Dead Instruction Elimination:")
-        .finish();
+        .run_pass(Ssa::mem2reg, "After Mem2Reg:");
+
+    // Repeatedly perform the following passes until the SSA stabilizes (maximum 20 iterations).
+    let mut prev_num_instructions = usize::MAX;
+    for _ in 0..20 {
+        ssa_builder = ssa_builder
+            .run_pass(Ssa::bubble_up_constrains, "After Constraint Bubbling:")
+            .run_pass(Ssa::fold_constants, "After Constant Folding:")
+            .run_pass(Ssa::dead_instruction_elimination, "After Dead Instruction Elimination:");
+
+        // Calculate the number of instructions in the `main` function.
+        let main = ssa_builder.ssa.main();
+        let entry_block = &main.dfg[main.entry_block()];
+        let num_instructions = entry_block.instructions().len();
+
+        if num_instructions < prev_num_instructions {
+            prev_num_instructions = num_instructions;
+        } else {
+            // SSA has stabilized. Further iterations are not useful.
+            break;
+        }
+    }
+
+    let ssa = ssa_builder.finish();
 
     let brillig = ssa.to_brillig(print_brillig_trace);
 
