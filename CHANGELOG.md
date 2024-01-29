@@ -1,5 +1,36 @@
 # Changelog
 
+## [0.23.1](https://github.com/noir-lang/noir/compare/v0.23.0...v0.23.1) (2024-01-29)
+
+
+### Features
+
+* Add brillig array index check ([#4127](https://github.com/noir-lang/noir/issues/4127)) ([c29f85f](https://github.com/noir-lang/noir/commit/c29f85fb5b1795e47282e4dbfbc1ceed2feb420c))
+* Add definitions for From and Into traits to Noir prelude ([#4169](https://github.com/noir-lang/noir/issues/4169)) ([4421ce4](https://github.com/noir-lang/noir/commit/4421ce4f8f91c7fcac34fbdb76e204df93a46df8))
+* Add option to print monomorphized program ([#4119](https://github.com/noir-lang/noir/issues/4119)) ([80f7e29](https://github.com/noir-lang/noir/commit/80f7e29340ceb88781dc80a13325468ace3b0cf3))
+* Add support for overriding expression width ([#4117](https://github.com/noir-lang/noir/issues/4117)) ([c8026d5](https://github.com/noir-lang/noir/commit/c8026d557d535b10fe455165d6445076df7a03de))
+* Disable constraint bubbling pass ([#4131](https://github.com/noir-lang/noir/issues/4131)) ([9ba2de6](https://github.com/noir-lang/noir/commit/9ba2de6143cd678b8656a84fab890e836257a13d))
+* **lsp:** Goto type reference for Struct ([#4091](https://github.com/noir-lang/noir/issues/4091)) ([d56cac2](https://github.com/noir-lang/noir/commit/d56cac2af7dc1cce0795f8e9701bb17cc3e67e14))
+* Move bounded_vec into the noir stdlib ([#4197](https://github.com/noir-lang/noir/issues/4197)) ([c50621f](https://github.com/noir-lang/noir/commit/c50621f1acddfb9138d6a036fd78c7a6c08dd084))
+* Multiply first to allow more ACIR gen optimizations ([#4201](https://github.com/noir-lang/noir/issues/4201)) ([882639d](https://github.com/noir-lang/noir/commit/882639de109f0ecccf2a8522e2181a301145e19f))
+* Separate compilation and expression narrowing in `nargo` interface ([#4100](https://github.com/noir-lang/noir/issues/4100)) ([62a4e37](https://github.com/noir-lang/noir/commit/62a4e37ef2274af2839011c3bab7bfdbf9f164fa))
+
+
+### Bug Fixes
+
+* Apply generic arguments from trait constraints before instantiating identifiers ([#4121](https://github.com/noir-lang/noir/issues/4121)) ([eb6fc0f](https://github.com/noir-lang/noir/commit/eb6fc0f3658bf126ed38d7aec7ee3f44ee0533b5))
+* Apply trait constraints from method calls ([#4152](https://github.com/noir-lang/noir/issues/4152)) ([68c5486](https://github.com/noir-lang/noir/commit/68c5486fda5a32eef74dd5b83b51024c1b3ab40c))
+* Better errors for missing `fn` keyword ([#4154](https://github.com/noir-lang/noir/issues/4154)) ([057c208](https://github.com/noir-lang/noir/commit/057c2083a61bdad7dfcdc8c3f39769b41ae6926e))
+* Check for tests in all packages before failing due to an unsatisfied test filter ([#4114](https://github.com/noir-lang/noir/issues/4114)) ([1107373](https://github.com/noir-lang/noir/commit/1107373bbbb9a8ca088dd6ac43131392cb2f33e1))
+* **docs:** Codegen docs before cutting a new version ([#4183](https://github.com/noir-lang/noir/issues/4183)) ([2914310](https://github.com/noir-lang/noir/commit/29143104fa907b446d534ac204069572cdc6f2f9))
+* **lsp:** Crash when file not in workspace ([#4146](https://github.com/noir-lang/noir/issues/4146)) ([cf7130f](https://github.com/noir-lang/noir/commit/cf7130f2e19e2d241e003c5527de9bf9d74cea40))
+* Maintain correct type when simplifying `x ^ x` ([#4082](https://github.com/noir-lang/noir/issues/4082)) ([9d83c2b](https://github.com/noir-lang/noir/commit/9d83c2b7d49490027bfa2974c1e2c5a85cc00aff))
+* Remove panic from `init_log_level` in `acvm_js` ([#4195](https://github.com/noir-lang/noir/issues/4195)) ([2e26530](https://github.com/noir-lang/noir/commit/2e26530bf53006c1ed4fee310bcaa905c95dd95b))
+* Respect order in bubble up for redundant asserts ([#4109](https://github.com/noir-lang/noir/issues/4109)) ([189aa48](https://github.com/noir-lang/noir/commit/189aa48c6c32fb6621b0e38a1f2d5d76d26ff0f2))
+* Save the data bus to the current function before generating others ([#4047](https://github.com/noir-lang/noir/issues/4047)) ([0a5bd4f](https://github.com/noir-lang/noir/commit/0a5bd4faa880dfcadf74372d8caeb458b2b55132))
+* Update array method type signatures in the docs ([#4178](https://github.com/noir-lang/noir/issues/4178)) ([7c0a955](https://github.com/noir-lang/noir/commit/7c0a955486e14628356bb269402f4287c5600df4))
+* Zero out input to `to_radix` calls if inactive ([#4116](https://github.com/noir-lang/noir/issues/4116)) ([3f5bad3](https://github.com/noir-lang/noir/commit/3f5bad3e60b8e2e72155e09f3951a73c3087a9c0))
+
 ## [0.23.0](https://github.com/noir-lang/noir/compare/v0.22.0...v0.23.0) (2024-01-22)
 
 
